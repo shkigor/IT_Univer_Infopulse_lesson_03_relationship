@@ -1,0 +1,13 @@
+Timetable:
+
+PART 3
+
+Hibernate relationship
+
+one-to-one
+start 1:54
+end   2:25:55
+
+one-to-many
+start 2:25:55
+
