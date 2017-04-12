@@ -1,0 +1,59 @@
+C:\Users\IShklyar
+λ d:
+
+D:\Development\apps\cmder\config\profile.d
+λ cd D:\Programs\PostgreSQL\9.6\bin
+
+D:\Programs\PostgreSQL\9.6\bin
+λ psql -U postgres
+Password for user postgres:
+psql (9.6.2)
+WARNING: Console code page (866) differs from Windows code page (1251)
+         8-bit characters might not work correctly. See psql reference
+         page "Notes for Windows users" for details.
+Type "help" for help.
+
+postgres=# DROP DATABASE univerlesson02_orm;
+DROP DATABASE
+postgres=# CREATE DATABASE univerlesson02_orm;
+CREATE DATABASE
+postgres=# \c univerlesson02_orm;
+WARNING: Console code page (866) differs from Windows code page (1251)
+         8-bit characters might not work correctly. See psql reference
+         page "Notes for Windows users" for details.
+You are now connected to database "univerlesson02_orm" as user "postgres".
+univerlesson02_orm=# SELECT * FROM myusers;
+ id  | lastname | firstname | address_id
+-----+----------+-----------+------------
+ 131 | Shklyar  | Igor      |         30
+(1 row)
+
+
+univerlesson02_orm=# SELECT * FROM address;
+ id | city
+----+------
+ 30 | Kiev
+(1 row)
+
+
+
+     * @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "address")
+     * mappedBy - это имя поля в классе User
+     * если не написать, то создадутся поля с именами address_id и user_id в двух таблицах,
+     * а не только address_id в таблице myusers
+
+univerlesson02_orm=# SELECT * FROM myusers;
+ id  | lastname | firstname | address_id
+-----+----------+-----------+------------
+ 131 | Shklyar  | Igor      |         30
+(1 row)
+
+
+univerlesson02_orm=# SELECT * FROM address;
+ id | city | user_id
+----+------+---------
+ 30 | Kiev |     131
+(1 row)
+
+
+univerlesson02_orm=#
