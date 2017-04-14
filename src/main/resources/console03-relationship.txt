@@ -55,5 +55,90 @@ univerlesson02_orm=# SELECT * FROM address;
  30 | Kiev |     131
 (1 row)
 
+=====================================================================================================================
+AFTER Part05_Relationship_one_to_many
+class Teacher with annotation @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "teacher")
 
-univerlesson02_orm=#
+     * mappedBy = "teacher" - это имя поля в классе Student
+
+postgres=# DROP DATABASE univerlesson02_orm;
+DROP DATABASE
+postgres=# CREATE DATABASE univerlesson02_orm;
+CREATE DATABASE
+postgres=# \c univerlesson02_orm;
+WARNING: Console code page (866) differs from Windows code page (1251)
+         8-bit characters might not work correctly. See psql reference
+         page "Notes for Windows users" for details.
+You are now connected to database "univerlesson02_orm" as user "postgres".
+univerlesson02_orm=# SELECT * FROM student;
+ id | name  | teacher_id
+----+-------+------------
+  1 | vasya |          1
+  2 | petya |          1
+(2 rows)
+
+
+univerlesson02_orm=# SELECT * FROM teacher;
+ id |        name
+----+--------------------
+  1 | Ivan Vladimirovich
+(1 row)
+
+=====================================================================================================================
+AFTER Part05_Relationship_one_to_many
+class Teacher with annotation @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+without mappedBy = "teacher"
+
+     * если не написать mappedBy = "teacher", то создастся дополнительная таблица с полями student_id и teacher_id для обеспечения связи
+
+univerlesson02_orm=# SELECT * FROM student;
+ id | name  | teacher_id
+----+-------+------------
+  1 | vasya |          1
+  2 | petya |          1
+(2 rows)
+
+
+univerlesson02_orm=# SELECT * FROM teacher;
+ id |        name
+----+--------------------
+  1 | Ivan Vladimirovich
+(1 row)
+
+
+univerlesson02_orm=# SELECT * FROM teacher_student;
+ teacher_id | students_id
+------------+-------------
+          1 |           1
+          1 |           2
+(2 rows)
+
+
+=====================================================================================================================
+AFTER Part05_Relationship_one_to_many
+class Teacher with annotation @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+without mappedBy = "teacher"
+and without
+        teacher.getStudents().add(student1);
+        teacher.getStudents().add(student2);
+
+
+univerlesson02_orm=# SELECT * FROM teacher_student;
+ teacher_id | students_id
+------------+-------------
+(0 rows)
+
+
+univerlesson02_orm=# SELECT * FROM student;
+ id | name  | teacher_id
+----+-------+------------
+  1 | vasya |          1
+  2 | petya |          1
+(2 rows)
+
+
+univerlesson02_orm=# SELECT * FROM teacher;
+ id |        name
+----+--------------------
+  1 | Ivan Vladimirovich
+(1 row)
