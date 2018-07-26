@@ -1,5 +1,3 @@
-Timetable:
-
 PART 3
 
 Hibernate relationship
@@ -17,5 +15,3 @@ start 2:47:30
 
 many-to-many через отдельную сущность
 start 3:21:45
-
-

@@ -142,3 +142,105 @@ univerlesson02_orm=# SELECT * FROM teacher;
 ----+--------------------
   1 | Ivan Vladimirovich
 (1 row)
+
+=====================================================================================================================
+AFTER Part06_Relationship_many_to_many
+class Bank with annotation @ManyToMany(fetch = FetchType.LAZY, mappedBy = "banks")
+
+univerlesson02_orm=# SELECT * FROM bank;
+ id |  name
+----+--------
+  1 | Oval
+  2 | Privat
+(2 rows)
+
+
+univerlesson02_orm=# SELECT * FROM client;
+ id | name
+----+-------
+  1 | vasya
+  2 | petya
+(2 rows)
+
+
+univerlesson02_orm=# SELECT * FROM client_bank;
+ clients_id | banks_id
+------------+----------
+          1 |        1
+          1 |        2
+          2 |        2
+          2 |        1
+(4 rows)
+
+=====================================================================================================================
+AFTER Part06_Relationship_many_to_many
+class Bank with annotation @ManyToMany(fetch = FetchType.LAZY)
+without mappedBy = "banks"
+
+     * Если не написать mappedBy = "banks" в аннотации @ManyToMany(fetch = FetchType.LAZY, mappedBy = "banks"),
+     * то вместо одной таблицы, будут две: одна будет называть client_bank, другая bank_client
+
+univerlesson02_orm=# SELECT * FROM bank;
+ id |  name
+----+--------
+  1 | Oval
+  2 | Privat
+(2 rows)
+
+
+univerlesson02_orm=# SELECT * FROM client;
+ id | name
+----+-------
+  1 | vasya
+  2 | petya
+(2 rows)
+
+
+univerlesson02_orm=# SELECT * FROM client_bank;
+ client_id | banks_id
+-----------+----------
+         1 |        1
+         1 |        2
+         2 |        2
+         2 |        1
+(4 rows)
+
+
+univerlesson02_orm=# SELECT * FROM bank_client;
+ bank_id | clients_id
+---------+------------
+(0 rows)
+
+
+
+=====================================================================================================================
+AFTER Part07_Relationship_many_to_many2
+many-to-many через отдельную сущность
+
+univerlesson02_orm=# SELECT * FROM client2;
+ id | name
+----+-------
+  1 | vasya
+  2 | petya
+(2 rows)
+
+
+univerlesson02_orm=# SELECT * FROM bank2;
+ id |  name
+----+--------
+  1 | Oval
+  2 | Privat
+(2 rows)
+
+
+univerlesson02_orm=# SELECT * FROM client_bank2;
+ client_id | bank_id
+-----------+---------
+         1 |       1
+         1 |       2
+         2 |       1
+         2 |       2
+(4 rows)
+
+
+univerlesson02_orm=#
